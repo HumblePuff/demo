@@ -4,6 +4,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import com.example.demo.model.Colaborador;
+import com.example.demo.model.Empresa;
+import com.example.demo.model.Horas;
+import com.example.demo.model.Iniciativa;
+import com.example.demo.repository.ColaboradorRepository;
+import com.example.demo.repository.EmpresaRepository;
+
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.time.LocalDateTime;
@@ -26,17 +34,17 @@ public class Application {
             Empresa empresa1 = new Empresa(
                     "nike",
                     "nike@empresa.com",
-                    "preco fechado");
+                    "FECHADO");
 
             Empresa empresa2 = new Empresa(
                     "puma",
                     "puma@empresa.com",
-                    "pool de horas");
+                    "ABERTO");
 
             Empresa empresa3 = new Empresa(
                     "razer",
                     "razer@empresa.com",
-                    "hora aberta");
+                    "POOL");
 
             empresa1.addIniciativa(new Iniciativa("projeto 1", empresa1));
             empresa2.addIniciativa(new Iniciativa("projeto 2", empresa2));
@@ -44,7 +52,7 @@ public class Application {
 
             EmpresaRepository.saveAll(List.of(empresa1, empresa2, empresa3));
 
-            EmpresaRepository.getAll().forEach((empresa) -> {
+            EmpresaRepository.findAll().forEach((empresa) -> {
                 System.out.println(empresa);
                 empresa.getIniciativas().forEach((iniciativa) -> {
                     System.out.println("--" + iniciativa.toString());
@@ -67,7 +75,7 @@ public class Application {
 
             ColaboradorRepository.saveAll(List.of(colaborador1, colaborador2, colaborador3));
 
-            ColaboradorRepository.getAll().forEach((colaborador) -> {
+            ColaboradorRepository.findAll().forEach((colaborador) -> {
                 System.out.println(colaborador);
                 colaborador.getHoras().forEach((horas) -> {
                     System.out.println("--" + horas.toString());

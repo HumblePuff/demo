@@ -1,38 +1,28 @@
-package com.example.demo;
+package com.example.demo.model;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import static javax.persistence.GenerationType.SEQUENCE;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 @NoArgsConstructor
 @Entity(name = "Colaborador")
 public class Colaborador {
 
     @Id
-    @SequenceGenerator(name = "colaborador_sequence", sequenceName = "colaborador_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = SEQUENCE, generator = "colaborador_sequence")
-    @Column(name = "colaborador_id", updatable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "colaborador_nome", nullable = false, columnDefinition = "TEXT")
+    @NonNull
     private String nome;
-
-    @Column(name = "colaborador_email", nullable = false, columnDefinition = "TEXT")
+    @NonNull
     private String email;
-
-    public Colaborador(String nome, String email) {
-        this.nome = nome;
-        this.email = email;
-    }
 
     @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     public List<Horas> horas = new ArrayList<>();
